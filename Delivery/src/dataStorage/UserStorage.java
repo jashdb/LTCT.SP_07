@@ -38,4 +38,14 @@ public class UserStorage {
         }
         return null;
     }
+
+    public User findUser(int userID) {
+        int n = this.userList.size();
+        User tmpUser;
+        for (int i = 0; i < n; i++) {
+            if ((tmpUser = this.userList.get(i)).getRole() == 1)
+                if (tmpUser.getId() == userID) return (User)tmpUser;
+        }
+        return null;
+    }
 }

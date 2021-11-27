@@ -65,6 +65,10 @@ public class DeliveryController {
         return this.userStorage.findShipper(shipperID);
     }
 
+    public User getUserInfo(int userID) {
+        return this.userStorage.findUser(userID);
+    }
+
     public Delivery getDeliveryInfo(int deliveryID) {
         return this.deliveryStorage.findDelivery(deliveryID);
     }
