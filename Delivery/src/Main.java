@@ -177,7 +177,20 @@ public class Main {
         }
     }
 
-    private static void cancelDelivery() {}
+    private static void cancelDelivery() {
+        int deliveryID;
+        Delivery delivery;
+        System.out.println("Enter the delivery' ID to cancel");
+        deliveryID = sc.nextInt();
+        sc.nextLine();
+        delivery = deliveryController.getDeliveryInfo(deliveryID);
+
+        if (deliveryController.cancelDelivery(delivery)) {
+            System.out.println("Delivery canceled.");
+        } else {
+            System.out.println("Can't cancel this delivery!");
+        }
+    }
 
     private static void updateDeliveryStatus() {}
 
