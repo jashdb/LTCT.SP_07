@@ -181,7 +181,16 @@ public class Main {
         }
     }
 
-<<<<<<< Updated upstream
+    private static void showDeliveryInfo(){
+        int deliveryID;
+        Delivery delivery;
+        System.out.println("Enter the delivery's ID");
+        deliveryID = sc.nextInt();
+        sc.nextLine();
+        delivery = deliveryController.getDeliveryInfo(deliveryID);
+        delivery.print();
+    }
+
     private static void cancelDelivery() {
         int deliveryID;
         Delivery delivery;
@@ -196,21 +205,22 @@ public class Main {
             System.out.println("Can't cancel this delivery!");
         }
     }
-=======
-    private static void showDeliveryInfo(){
+    
+    private static void updateDeliveryStatus() {
         int deliveryID;
         Delivery delivery;
-        System.out.println("Enter the delivery's ID");
+        System.out.println("Enter the delivery' ID to update");
         deliveryID = sc.nextInt();
         sc.nextLine();
         delivery = deliveryController.getDeliveryInfo(deliveryID);
-        delivery.print();
+        int firstStatus = delivery.getStatus();
+        delivery.setStatus(firstStatus+1);
+        if (firstStatus != delivery.getStatus()) {
+            System.out.println("Delivery updated.");
+        } else {
+            System.out.println("Can't update this delivery!");
+        }
     }
-
-    private static void cancelDelivery() {}
->>>>>>> Stashed changes
-
-    private static void updateDeliveryStatus() {}
 
     private static void showUserInfo() {}
 
