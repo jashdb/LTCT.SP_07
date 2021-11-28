@@ -222,7 +222,11 @@ public class Main {
         }
     }
 
-    private static void showUserInfo() {}
+    private static void showUserInfo() {
+        System.out.println("Enter customer's ID: ");
+        int customerID = sc.nextInt();
+        deliveryController.getCustomerInfo(customerID).print();
+    }
 
     private static void showDeliveriesByUser() {
         int userID;
