@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         int choice = 0;
 
-        while (choice != 9) {
+        while (choice != 11) {
             showMainMenu();
             choice = sc.nextInt();
             sc.nextLine();
@@ -36,15 +36,18 @@ public class Main {
                     showDeliveries();
                     break;
                 case 6 :
-                    cancelDelivery();
+                    showDeliveryInfo();
                     break;
                 case 7 :
-                    updateDeliveryStatus();
+                    cancelDelivery();
                     break;
                 case 8 :
-                    showUserInfo();
+                    updateDeliveryStatus();
                     break;
                 case 9 :
+                    showUserInfo();
+                    break;
+                case 10 :
                     showDeliveriesByUser();
                     break;
                 default:
@@ -62,11 +65,12 @@ public class Main {
         System.out.println("3. New Product.");
         System.out.println("4. New Delivery.");
         System.out.println("5. Show Deliveries.");
-        System.out.println("6. Cancel Delivery.");
-        System.out.println("7. Update Delivery Status.");
-        System.out.println("8. Show User Information.");
-        System.out.println("9. Show Deliveries By User.");
-        System.out.println("10. Exit.");
+        System.out.println("6. Show Delivery Info.");
+        System.out.println("7. Cancel Delivery.");
+        System.out.println("8. Update Delivery Status.");
+        System.out.println("9. Show User Information.");
+        System.out.println("10. Show Deliveries By User.");
+        System.out.println("11. Exit.");
         System.out.println("===========================");
     }
 
@@ -177,6 +181,7 @@ public class Main {
         }
     }
 
+<<<<<<< Updated upstream
     private static void cancelDelivery() {
         int deliveryID;
         Delivery delivery;
@@ -191,12 +196,36 @@ public class Main {
             System.out.println("Can't cancel this delivery!");
         }
     }
+=======
+    private static void showDeliveryInfo(){
+        int deliveryID;
+        Delivery delivery;
+        System.out.println("Enter the delivery's ID");
+        deliveryID = sc.nextInt();
+        sc.nextLine();
+        delivery = deliveryController.getDeliveryInfo(deliveryID);
+        delivery.print();
+    }
+
+    private static void cancelDelivery() {}
+>>>>>>> Stashed changes
 
     private static void updateDeliveryStatus() {}
 
     private static void showUserInfo() {}
 
-    private static void showDeliveriesByUser() {}
+    private static void showDeliveriesByUser() {
+        int userID;
+        System.out.println("Enter the user's ID");
+        userID = sc.nextInt();
+        sc.nextLine();
+        List<Delivery> dList = deliveryController.getDeliveryListForCustomer(userID);
+        System.out.println("Delivery list for user " + userID +":");
+        for (int i = 0; i < dList.size(); i++) {
+            dList.get(i).print();
+            System.out.println("----------------");
+        }
+    }
 
     private static void closeScanner() {
         sc.close();
