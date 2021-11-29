@@ -11,6 +11,7 @@ public class Main {
     private static DeliveryController deliveryController = new DeliveryController();
     private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
+        generateTests();
         int choice = 0;
 
         while (choice != 11) {
@@ -52,6 +53,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opps, looks like it's invalid value, try again!");
+                    if (choice!=11) System.out.println("Opps, looks like it's invalid value, try again!");
                     break;
             }
         }
@@ -178,6 +180,8 @@ public class Main {
         List<Delivery> deliveries = deliveryController.getAllDeliveries();
         for (int i = 0; i < deliveries.size(); i++) {
             deliveries.get(i).print();
+            System.out.println("--------"); 
+            deliveries.get(i).print(); 
         }
     }
 
@@ -243,5 +247,31 @@ public class Main {
 
     private static void closeScanner() {
         sc.close();
+    }
+
+    private static void generateTests() {
+        int numberofTests = 5;
+        int productCount = 10;
+
+        for (int i=1;i<=numberofTests;i++){
+            Customer newCustomer = new Customer("customer"+i, "012345678"+i, "01/01/200"+i);
+            deliveryController.addUserToStorage(newCustomer);
+
+            Product newProduct = new Product(i, "product"+i, "ABC chi nhanh "+i, productCount);
+            deliveryController.addProductToStorage(newProduct);
+        }
+
+        for (int i=1;i<=numberofTests;i++){
+            Shipper newShipper = new Shipper("shipper"+i, "098765432"+i, "31/12/200"+i);
+            deliveryController.addUserToStorage(newShipper);
+
+            Delivery newDelivery = new Delivery();
+            newDelivery.setCustomer(deliveryController.getCustomerInfo(i-1));
+            newDelivery.setShipper(deliveryController.getShipperInfo(i-1+numberofTests));
+            newDelivery.setShippingFee(15);
+            newDelivery.getProducts().add(deliveryController.getProductInfo(i-1));
+            newDelivery.setDeliveryAddress("Address"+i);
+            deliveryController.addDeliveryToStorage(newDelivery);
+        }
     }
 }
