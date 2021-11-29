@@ -52,7 +52,6 @@ public class Main {
                     showDeliveriesByUser();
                     break;
                 default:
-                    System.out.println("Opps, looks like it's invalid value, try again!");
                     if (choice!=11) System.out.println("Opps, looks like it's invalid value, try again!");
                     break;
             }
@@ -179,7 +178,6 @@ public class Main {
     private static void showDeliveries() {
         List<Delivery> deliveries = deliveryController.getAllDeliveries();
         for (int i = 0; i < deliveries.size(); i++) {
-            deliveries.get(i).print();
             System.out.println("--------"); 
             deliveries.get(i).print(); 
         }
