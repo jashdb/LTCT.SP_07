@@ -48,7 +48,7 @@ public class DeliveryController {
             for (int i = 0; i < delivery.getProducts().size(); i++) {
                 updateWareHouse(delivery.getProducts().get(i));
             }
-            delivery.setStatus(5);
+            delivery.setStatus(4);
             return true;
         }
     }

@@ -9,11 +9,4 @@ public class Customer extends User {
     public String getRoleName() {
         return "Customer";
     }
-
-    public void print() {
-        System.out.println("Id: " + this.id);
-        System.out.println("Name: " + this.getName());
-        System.out.println("Phone: " + this.getPhone());
-        System.out.println("Birthday: " + this.getBirthDay());
-    }
 }
