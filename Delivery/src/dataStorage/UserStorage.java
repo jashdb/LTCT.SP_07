@@ -43,8 +43,8 @@ public class UserStorage {
         int n = this.userList.size();
         User tmpUser;
         for (int i = 0; i < n; i++) {
-            if ((tmpUser = this.userList.get(i)).getRole() == 1)
-                if (tmpUser.getId() == userID) return (User)tmpUser;
+            tmpUser = this.userList.get(i);
+            if (tmpUser.getId() == userID) return (User)tmpUser;
         }
         return null;
     }

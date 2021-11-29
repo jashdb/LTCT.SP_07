@@ -223,9 +223,10 @@ public class Main {
     }
 
     private static void showUserInfo() {
-        System.out.println("Enter customer's ID: ");
-        int customerID = sc.nextInt();
-        deliveryController.getCustomerInfo(customerID).print();
+        System.out.println("Enter user's ID: ");
+        int userID = sc.nextInt();
+        sc.nextLine();
+        deliveryController.getUserInfo(userID).print();
     }
 
     private static void showDeliveriesByUser() {
