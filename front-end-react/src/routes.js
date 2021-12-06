@@ -3,15 +3,14 @@ import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
 import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
-import Maps from "views/Map.js";
 import UserPage from "views/User.js";
-import UpgradeToPro from "views/Upgrade.js";
+import LoginPage from "views/LoginPage";
 
 var routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    path: "/my-deliveries",
+    name: "My Deliveries",
+    icon: "nc-icon nc-delivery-fast",
     component: Dashboard,
     layout: "/admin",
   },
@@ -20,13 +19,6 @@ var routes = [
     name: "Icons",
     icon: "nc-icon nc-diamond",
     component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
     layout: "/admin",
   },
   {
@@ -44,6 +36,13 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-circle-10",
+    component: LoginPage,
+    layout: "/admin",
+  },
+  {
     path: "/tables",
     name: "Table List",
     icon: "nc-icon nc-tile-56",
@@ -55,14 +54,6 @@ var routes = [
     name: "Typography",
     icon: "nc-icon nc-caps-small",
     component: Typography,
-    layout: "/admin",
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
     layout: "/admin",
   },
 ];
