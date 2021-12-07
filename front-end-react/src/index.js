@@ -9,11 +9,14 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.js";
 
+import axios from 'axios';
+axios.defaults.baseURL = "http://localhost:8000/";
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect to="/admin/dashboard" />
+      <Redirect to="/admin/my-deliveries" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
