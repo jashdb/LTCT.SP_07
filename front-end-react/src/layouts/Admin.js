@@ -22,9 +22,9 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, useLocation } from "react-router-dom";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import Delivery from 'views/Delivery'
 
 import routes from "routes.js";
 
@@ -77,8 +77,8 @@ function Dashboard(props) {
               />
             );
           })}
+          <Route path="/admin/delivery" component={Delivery}/> {/*/:deliveryId*/}
         </Switch>
-        <Footer fluid />
       </div>
       <FixedPlugin
         bgColor={backgroundColor}
