@@ -16,10 +16,12 @@ class CreateDeliveryTable extends Migration
         Schema::create('Delivery', function (Blueprint $table) {
             $table->bigIncrements('deliveryId');
             $table->bigInteger('customerId')->unsigned();
-            $table->foreign('customerId')->references('userId')->on('User')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('customerName');
+            $table->string('customerPhone');
             $table->bigInteger('shipperId')->unsigned();
             $table->foreign('shipperId')->references('userId')->on('User')->onDelete('cascade')->onUpdate('cascade');
             $table->string('deliveryAddress');
+            $table->bigInteger('cost');
             $table->bigInteger('shippingFee');
             $table->integer('status');
             $table->timestamps();

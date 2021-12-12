@@ -97,7 +97,7 @@ function LoginForm() {
                             <input id="pass" type="password" className="input" data-type="password" name="password" onChange={handleLoginInput}/>
                         </div>
                         <div className="group">
-                            <input id="check" type="checkbox" className="check" checked/>
+                            <input id="check" type="checkbox" className="check" unchecked/>
                             <label for="check"><span className="icon"></span> Keep me Signed in</label>
                         </div>
                         <div className="group">

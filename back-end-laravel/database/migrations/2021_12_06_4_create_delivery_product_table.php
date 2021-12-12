@@ -18,7 +18,10 @@ class CreateDeliveryProductTable extends Migration
             $table->bigInteger('deliveryId')->unsigned();
             $table->foreign('deliveryId')->references('deliveryId')->on('Delivery')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('productId')->unsigned();
-            $table->foreign('productId')->references('productId')->on('Product')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('productName');
+            $table->string('category');
+            $table->string('company');
+            $table->timestamp('productionDate');
             $table->integer('count');
             $table->timestamps();
         });
