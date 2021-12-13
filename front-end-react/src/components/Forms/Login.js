@@ -3,9 +3,12 @@ import axios from 'axios';
 import { useState } from "react";
 import swal from 'sweetalert';
 import {useHistory} from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import actionLogin from "redux/actions/actionLogin"
 
 function LoginForm() {
     const history = useHistory();
+    const dispatch = useDispatch();
 
     var registerTmpInfo = {
         username: '',
@@ -50,6 +53,7 @@ function LoginForm() {
 
         if (res.data.status === 200) {
             try {
+                dispatch(actionLogin(res.data.user));
                 swal(res.data.message, "Welcome to Delivery Module, " + res.data.user.fullname + "!", "success").then(() => history.push("/my-deliveries"));
             }
             catch(err) {
@@ -73,6 +77,7 @@ function LoginForm() {
 
         if (res.data.status === 200) {
             try {
+                dispatch(actionLogin(res.data.user));
                 swal(res.data.message, "Welcome back, " + res.data.user.fullname + "!", "success").then(() => history.push("/my-deliveries"));
             }
             catch(err) {
