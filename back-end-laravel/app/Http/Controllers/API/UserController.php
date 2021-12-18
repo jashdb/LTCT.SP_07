@@ -37,7 +37,7 @@ class UserController extends Controller
         $newUser->password = Hash::make($request->input('password'));
         $newUser->fullname = $request->input('fullname');
         $newUser->email = $request->input('email');
-        $newUser->role = 0;     //role: shipper by default
+        $newUser->role = $request->input('role');
         $newUser->avatar = "https://www.hoteljob.vn/cong-dong/frontend/images/default_avatar.png"; //Default avatar image
 
         $newUser->save();

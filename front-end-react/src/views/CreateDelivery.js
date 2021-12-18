@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   FormGroup,
@@ -9,6 +9,53 @@ import {
 import {Button} from "reactstrap";
 
 export default function CreateDelivery() {
+    const [state, setState] = useState({
+        customerId: 0,
+        shipperId: 0,
+        orderId: 0,
+        deliveryAddress: "",
+        cost: 0,
+        district: "option1",
+        shippingFee: 0,
+    });
+
+    const [productList, setProductList] = useState([]);
+
+    // Select district
+    // const handleDistrict = (e) => {
+    //     handleChange(e);
+    // }
+
+    // const confirmDistrict = () => {
+    //     console.log(state.district);
+    // }
+
+    const handleChange = (e) => {
+		setState({...state, [e.target.name]: e.target.value });
+	}
+
+    const addProduct = (e) => {
+        setProductList(productList.concat(
+            <div>
+                <table width="100%">
+                    <td>
+                        <Input type="text" name="productName" placeholder="Enter productName"/>
+                    </td>
+                    <td>
+                        <Input type="text" name="productId" placeholder="Enter productId"/>
+                    </td>
+                    <td>
+                        <Input type="text" name="count" placeholder="Enter count"/>
+                    </td>
+                </table>
+            </div>
+        ))
+    }
+
+    const submit = async () => {
+        console.log(state);
+    }
+
     return (
         <div className="content">
             <form>
@@ -19,26 +66,7 @@ export default function CreateDelivery() {
                         name="customerId"
                         id="customerId"
                         placeholder="Enter customerId"
-                    />
-                    <br/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="customerName">Customer Name</Label>
-                    <Input
-                        type="text"
-                        name="customerName"
-                        id="customerName"
-                        placeholder="Enter customerName"
-                    />
-                    <br/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="customerPhone">Customer Phone number</Label>
-                    <Input
-                        type="phone"
-                        name="customerPhone"
-                        id="customerPhone"
-                        placeholder="Enter customerPhone"
+                        onChange={handleChange}
                     />
                     <br/>
                 </FormGroup>
@@ -49,6 +77,18 @@ export default function CreateDelivery() {
                         name="shipperId"
                         id="shipperId"
                         placeholder="Enter shipperId"
+                        onChange={handleChange}
+                    />
+                    <br/>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="orderId">Order ID</Label>
+                    <Input
+                        type="phone"
+                        name="orderId"
+                        id="orderId"
+                        placeholder="Enter orderId"
+                        onChange={handleChange}
                     />
                     <br/>
                 </FormGroup>
@@ -59,6 +99,7 @@ export default function CreateDelivery() {
                         name="deliveryAddress"
                         id="deliveryAddress"
                         placeholder="Enter deliveryAddress"
+                        onChange={handleChange}
                     />
                     <br/>
                 </FormGroup>
@@ -69,9 +110,27 @@ export default function CreateDelivery() {
                         name="cost"
                         id="cost"
                         placeholder="Enter cost"
+                        onChange={handleChange}
                     />
                     <br/>
                 </FormGroup>
+                <FormGroup>
+                    {productList}
+                    <Button color="primary" onClick={addProduct}>
+                        Add Product
+                    </Button>
+                </FormGroup>
+                {/* <FormGroup>
+                    <Label for="district">District</Label>
+                    <Input type="select" name="district" id="district" onChange={handleDistrict}>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </Input>
+                    <Button color="primary" onClick={confirmDistrict}>
+                        Ok
+                    </Button>
+                </FormGroup> */}
                 <FormGroup>
                     <Label for="shippingFee">Shipping Fee</Label>
                     <Input
@@ -79,10 +138,11 @@ export default function CreateDelivery() {
                         name="shippingFee"
                         id="shippingFee"
                         placeholder="Enter shippingFee"
+                        onChange={handleChange}
                     />
                     <br/>
                 </FormGroup>
-                <Button color="primary" type="submit">
+                <Button color="primary" onClick={submit}>
                     Submit
                 </Button>
             </form>

@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import {useHistory} from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import actionLogin from "redux/actions/actionLogin"
+import { FormGroup, Input, Label } from "reactstrap";
 
 function LoginForm() {
     const history = useHistory();
@@ -15,6 +16,7 @@ function LoginForm() {
         password: '',
         fullname: '',
         email: '',
+        role: 0,
     }
 
     const [loginInfo, setLoginInfo] = useState({
@@ -39,6 +41,10 @@ function LoginForm() {
             case 'email':
                 registerTmpInfo.email = e.target.value
                 break;
+            case 'role':
+                registerTmpInfo.role = (e.target.checked ? 1 : 0)
+                console.log(registerTmpInfo)
+                break; 
             default:
                 break;
         }
@@ -94,12 +100,12 @@ function LoginForm() {
                 <div className="login-form">
                     <div className="sign-in-htm">
                         <div className="group">
-                            <label for="user" className="label">Username</label>
-                            <input id="user" type="text" className="input" name="username" onChange={handleLoginInput}/>
+                            <label for="loguser" className="label">Username</label>
+                            <input id="loguser" type="text" className="input" name="username" onChange={handleLoginInput}/>
                         </div>
                         <div className="group">
-                            <label for="pass" className="label">Password</label>
-                            <input id="pass" type="password" className="input" data-type="password" name="password" onChange={handleLoginInput}/>
+                            <label for="logpass" className="label">Password</label>
+                            <input id="logpass" type="password" className="input" data-type="password" name="password" onChange={handleLoginInput}/>
                         </div>
                         <div className="group">
                             <input id="check" type="checkbox" className="check" unchecked/>
@@ -115,8 +121,8 @@ function LoginForm() {
                     </div>
                     <div className="sign-up-htm">
                         <div className="group">
-                            <label for="user" className="label">Username</label>
-                            <input id="user" type="text" className="input" name="username" onChange={handleRegisterInput}/>
+                            <label for="username" className="label">Username</label>
+                            <input id="username" type="text" className="input" name="username" onChange={handleRegisterInput}/>
                         </div>
                         <div className="group">
                             <label for="fullname" className="label">Full name</label>
@@ -127,9 +133,18 @@ function LoginForm() {
                             <input id="pass" type="password" className="input" data-type="password" name="password" onChange={handleRegisterInput}/>
                         </div>
                         <div className="group">
-                            <label for="pass" className="label">Email Address</label>
-                            <input id="pass" type="text" className="input" name="email" onChange={handleRegisterInput}/>
+                            <label for="email" className="label">Email Address</label>
+                            <input id="email" type="text" className="input" name="email" onChange={handleRegisterInput}/>
                         </div>
+                        <FormGroup check>
+                            <Label check>
+                            <Input type="checkbox" name="role" onChange={handleRegisterInput}/>{' '}
+                                I'm shipper
+                            <span className="form-check-sign">
+                                <span className="check"></span>
+                            </span>
+                            </Label>
+                        </FormGroup>
                         <br/>
                         <div className="group">
                             <input type="submit" className="button" value="Sign Up" onClick={submitRegister}/>

@@ -9,6 +9,6 @@ class Delivery extends Model
 {
     use HasFactory;
     protected $table = 'Delivery';
-    protected $fillable = ['customerId', 'shipperId', 'deliveryAddress', 'shippingFee', 'status', 'customerName', 'customerPhone', 'cost'];
+    protected $fillable = ['customerId', 'shipperId', 'deliveryAddress', 'shippingFee', 'status', 'cost', 'orderId'];
     protected $primaryKey = 'deliveryId';
 }

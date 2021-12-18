@@ -16,10 +16,8 @@ class CreateDeliveryTable extends Migration
         Schema::create('Delivery', function (Blueprint $table) {
             $table->bigIncrements('deliveryId');
             $table->bigInteger('customerId')->unsigned();
-            $table->string('customerName');
-            $table->string('customerPhone');
             $table->bigInteger('shipperId')->unsigned();
-            $table->foreign('shipperId')->references('userId')->on('User')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger("orderId")->unsigned();
             $table->string('deliveryAddress');
             $table->bigInteger('cost');
             $table->bigInteger('shippingFee');
