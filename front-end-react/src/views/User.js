@@ -35,7 +35,7 @@ function User() {
     avatar: "https://www.hoteljob.vn/cong-dong/frontend/images/default_avatar.png",
     fullname: "Example name",
     email: "abc@gmail.com",
-    role: 1,
+    role: 2,
   }
   return (
     <>
@@ -60,7 +60,7 @@ function User() {
                     <h5 className="title">{userInfo.fullname}</h5>
                   </a>
                   <p className="description">{userInfo.email}</p>
-                  <p className="description">{userInfo.role === 0 ? "Shipper" : "Other role"}</p>
+                  <p className="description">{userInfo.role === 1 ? "Shipper" : (userInfo.role === 0 ? "Customer" : "Other role")}</p>
                 </div>
               </CardBody>
               <CardFooter>
