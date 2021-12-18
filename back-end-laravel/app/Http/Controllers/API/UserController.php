@@ -47,4 +47,27 @@ class UserController extends Controller
             'message' => 'Create Account Successfully',
         ]);
     }
+
+    public function getUserInfo(Request $request){
+        //'email', 'fullname', 'password', 'avatar', 'role', 'username'
+        $userId = $request->input('userId');
+
+        $user = DB::table('User')
+                ->where('userId',$userId)
+                ->select('userId','email', 'fullname', 'avatar', 'role', 'username')
+                ->first();
+
+        if ($user != NULL) {
+            return response()->json([
+                'status' => 200,
+                'user' => $user,
+                'message' => 'Successfully',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Not found',
+            ]);
+        }
+    }
 }
