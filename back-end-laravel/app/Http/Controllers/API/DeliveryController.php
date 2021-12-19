@@ -79,6 +79,7 @@ class DeliveryController extends Controller
         //lay ra delivery chua shipper nao nhan
         $deliveries = DB::table('Delivery')
                 ->where('status',0)
+                ->orderBy('created_at', 'desc')
                 ->get();
         
         if($deliveries != NULL){
@@ -99,6 +100,7 @@ class DeliveryController extends Controller
         //lay ra deliveries của user 
         $deliveries = DB::table('Delivery')
                 ->where('customerId',$request->input('customerId'))
+                ->orderBy('created_at', 'desc')
                 ->get();
         if($deliveries != NULL)
         {
@@ -119,6 +121,7 @@ class DeliveryController extends Controller
         //lay ra deliveries của shipper 
         $deliveries = DB::table('Delivery')
                 ->where('shipperId',$request->input('shipperId'))
+                ->orderBy('created_at', 'desc')
                 ->get();
         if($deliveries != NULL)
         {
