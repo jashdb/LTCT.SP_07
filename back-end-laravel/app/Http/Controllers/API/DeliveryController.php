@@ -65,8 +65,7 @@ class DeliveryController extends Controller
 
     public function updateStatus(Request $request){
         
-        $delivery = DB::table('Delivery')
-                ->where('deliveryId',$request->input('deliveryId'))
+        $delivery = Delivery::where('deliveryId',$request->input('deliveryId'))
                 ->first();
         $delivery->status +=1;
         $delivery->save();
