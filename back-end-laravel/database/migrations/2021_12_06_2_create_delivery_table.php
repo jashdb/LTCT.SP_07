@@ -16,7 +16,7 @@ class CreateDeliveryTable extends Migration
         Schema::create('Delivery', function (Blueprint $table) {
             $table->bigIncrements('deliveryId');
             $table->bigInteger('customerId')->unsigned();
-            $table->bigInteger('shipperId')->unsigned();
+            $table->bigInteger('shipperId')->unsigned()->nullable();
             $table->bigInteger("orderId")->unsigned();
             $table->string('deliveryAddress');
             $table->bigInteger('cost');

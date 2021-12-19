@@ -5,6 +5,7 @@ import Typography from "views/Typography.js";
 import UserPage from "views/User.js";
 import LoginPage from "views/LoginPage";
 import CreateDelivery from "views/CreateDelivery";
+import AvailableDelivery from "views/AvailableDelivery";
 
 var routes = [
   {
@@ -12,6 +13,13 @@ var routes = [
     name: "My Deliveries",
     icon: "nc-icon nc-delivery-fast",
     component: Dashboard,
+    layout: "/admin",
+  },
+  {
+    path: "/available-delivery",
+    name: "Available delivery",
+    icon: "nc-icon nc-tag-content",
+    component: AvailableDelivery,
     layout: "/admin",
   },
   {

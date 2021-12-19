@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 
 import {
   FormGroup,
@@ -7,11 +9,12 @@ import {
 } from "reactstrap";
 
 import {Button} from "reactstrap";
+import swal from "sweetalert";
 
 export default function CreateDelivery() {
+    const history = useHistory();
     const [state, setState] = useState({
         customerId: 0,
-        shipperId: 0,
         orderId: 0,
         deliveryAddress: "",
         cost: 0,
@@ -53,7 +56,16 @@ export default function CreateDelivery() {
     }
 
     const submit = async () => {
-        console.log(state);
+        const data = state;
+        const res = await axios.post('/api/createDelivery', data);
+        console.log(res);
+        if (res.data.status === 200) {
+            swal("Done !" , res.data.message, "success").then(() => history.push("/my-deliveries"));
+        } else if (res.data.status === 201) {
+            swal("Warning !" , res.data.message, "warning");
+        } else{
+            swal("Error", "Some errors occured!", "error");
+        }
     }
 
     return (
@@ -66,17 +78,6 @@ export default function CreateDelivery() {
                         name="customerId"
                         id="customerId"
                         placeholder="Enter customerId"
-                        onChange={handleChange}
-                    />
-                    <br/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="shipperId">Shipper's ID</Label>
-                    <Input
-                        type="text"
-                        name="shipperId"
-                        id="shipperId"
-                        placeholder="Enter shipperId"
                         onChange={handleChange}
                     />
                     <br/>
