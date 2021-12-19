@@ -10,9 +10,9 @@ import {
   Table,
   CardTitle,
   Col,
-  Button,
 } from "reactstrap";
 import UserName from "components/Texts/UserName";
+import TakeDeliveryButton from "components/Buttons/TakeDeliveryButton";
 
 export default function AvailableDelivery() {
   const history = useHistory();
@@ -35,10 +35,6 @@ export default function AvailableDelivery() {
     } else if (res.data.status === 404) mes = "No delivery available!";
   };
 
-  const acceptDelivery = () => {
-    //TODO
-  };
-
   var userInfo = useSelector((state) => state.reducerLogin).userInfo;
 
   if (userInfo === undefined) {
@@ -48,6 +44,13 @@ export default function AvailableDelivery() {
       "warning"
     ).then(() => history.push("/admin/login"));
     return <div className="content">You need to login...</div>;
+  } else if (userInfo.role === 0) {
+    swal(
+      "You dont't have permission to access this page",
+      "Only shipper can access this page!",
+      "warning"
+    ).then(() => history.push("/admin/login"));
+    return <div className="content">Only shipper can access this page</div>;
   } else if (userInfo.role === 1)
     return (
       <div className="content">
@@ -62,7 +65,7 @@ export default function AvailableDelivery() {
                   <tr>
                     <th></th>
                     <th>Customer name</th>
-                    <th >Delivery address</th>
+                    <th>Delivery address</th>
                     <th className="text-right" width="150px">
                       Cost
                     </th>
@@ -81,9 +84,7 @@ export default function AvailableDelivery() {
                         return (
                           <tr>
                             <td width="100px">
-                              <Button color="primary" onClick={acceptDelivery}>
-                                Get
-                              </Button>
+                              <TakeDeliveryButton deliveryId={row.deliveryId}/>
                             </td>
                             <td><UserName userId={row.customerId}/></td>
                             <td>{row.deliveryAddress}</td>

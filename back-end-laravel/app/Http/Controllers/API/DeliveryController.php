@@ -183,11 +183,10 @@ class DeliveryController extends Controller
         $shipperId = $request->input('shipperId');
         $deliveryId = $request->input('deliveryId');
 
-        $delivery = DB::table('Delivery')
-                ->where('deliveryId',$deliveryId)
-                ->first();
-        if($delivery->status == 0 && $delivery->shipperId ==NULL)
-        {$delivery->status +=1;
+        $delivery = Delivery::where('deliveryId',$deliveryId)
+            ->first();
+        if($delivery->status == 0 && $delivery->shipperId == NULL) {
+            $delivery->status +=1;
             $delivery->shipperId = $shipperId;
             $delivery->save();
             return response()->json([
