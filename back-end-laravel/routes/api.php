@@ -31,3 +31,5 @@ Route::post('/getDeliveryByUser', [DeliveryController::class, 'getDeliveryByUser
 Route::post('/getDeliveryByShipper', [DeliveryController::class, 'getDeliveryByShipper']);
 Route::post('/deleteDelivery', [DeliveryController::class, 'deleteDelivery']);
 Route::post('/cancelDelivery', [DeliveryController::class, 'cancelDelivery']);
+Route::post('/takeDelivery', [DeliveryController::class, 'takeDelivery']);
+Route::post('/checkShipper', [DeliveryController::class, 'checkShipper']);
