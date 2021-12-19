@@ -21,7 +21,6 @@ export default function ShipperDelivery(props) {
     };
 
     const res = await axios.post("/api/getDeliveryByShipper", data);
-    console.log(res);
     if (res.data.status === 200) {
       setDeliveryList(res.data.deliveries);
     } else if (res.data.status === 404) mes = "No delivery!";
@@ -65,7 +64,7 @@ export default function ShipperDelivery(props) {
                             <GoToDeliveryButton deliveryId={row.deliveryId} />
                           </td>
                           <td>
-                            <UserName userId={row.shipperId} />
+                            <UserName userId={row.customerId} />
                           </td>
                           <td>{row.deliveryAddress}</td>
                           <td className="text-right" width="150px">
