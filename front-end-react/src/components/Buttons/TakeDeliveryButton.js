@@ -15,7 +15,7 @@ export default function TakeDeliveryButton(props) {
         const res = await axios.post('api/takeDelivery', data);
         if (res.data.status === 200) {
             swal("Success !", res.data.message, "success")
-                .then(() => history.push("/admin/available-delivery"));
+                .then(() => history.push("/admin/my-deliveries"));
         } else {
             swal("Some error occured !", res.data.message, "error");
         }
