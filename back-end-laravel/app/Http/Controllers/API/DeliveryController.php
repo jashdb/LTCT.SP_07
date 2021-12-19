@@ -14,30 +14,25 @@ class DeliveryController extends Controller
         //'customerId', 'shipperId', 'deliveryAddress', 'shippingFee', 'status', 'cost', 'orderId'
         $newDelivery = new Delivery();
         $newDelivery->customerId = $request->input('customerId');
-        $newDelivery->shipperId = $request->input('shipperId');
         $newDelivery->deliveryAddress = $request->input('deliveryAddress');
         $newDelivery->shippingFee = $request->input('shippingFee');
         $newDelivery->status = 0;
         $newDelivery->cost = $request->input('cost');
         $newDelivery->orderId = $request->input('orderId');
-        
+
         $customer  = DB::table('User')
                     ->where('userId',$request->input('customerId'))
                     ->first();
 
-        $shipper  = DB::table('User')
-                    ->where('userId',$request->input('shipperId'))
-                    ->first();
-
-        if($customer->role != 0){
+        if ($customer == null)
+            return response()->json([
+                'status' => 201,
+                'message' => 'customerId doesn\'t exist!',
+            ]);
+        elseif ($customer->role != 0){
             return response()->json([
                 'status' => 201,
                 'message' => 'Wrong CustomerId!',
-            ]);
-        }elseif($shipper->role != 1){
-            return response()->json([
-                'status' => 201,
-                'message' => 'Wrong ShipperId!',
             ]);
         }else{
             $newDelivery->save();
@@ -83,14 +78,14 @@ class DeliveryController extends Controller
 
     public function getAvailableDelivery(Request $request){
         //lay ra delivery chua shipper nao nhan
-        $delivery = DB::table('Delivery')
+        $deliveries = DB::table('Delivery')
                 ->where('status',0)
-                ->all();
+                ->get();
         
-        if($delivery != NULL){
+        if($deliveries != NULL){
             return response()->json([
                 'status' => 200,
-                'delivery' => $delivery,
+                'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
         }else{
@@ -136,7 +131,7 @@ class DeliveryController extends Controller
         }else{
             return response()->json([
                 'status' => 404,
-                'message' => '...Đỗ nghèo khỉ',
+                'message' => '...Đồ lười!',
             ]);
         }
     }
@@ -162,7 +157,7 @@ class DeliveryController extends Controller
         }   
     }
 
-    public function cancelDelivery(Request $request){                 //0. chơ xac nhan
+    public function cancelDelivery(Request $request){                       //0. cho xac nhan
         $delivery = DB::table('Delivery')                                   //1. cho lay hang
                 ->where('deliveryId',$request->input('deliveryId'))         //2. dang giao
                 ->first();                                                  //3. da giao
