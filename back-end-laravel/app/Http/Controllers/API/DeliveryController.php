@@ -140,8 +140,7 @@ class DeliveryController extends Controller
                 ->where('deliveryId',$request->input('deliveryId'))
                 ->first();
         if($delivery->status >= 3) {
-            DB::table('Delivery')
-                ->where('deliveryId',$request->input('deliveryId'))
+            Delivery::where('deliveryId',$request->input('deliveryId'))
                 ->delete();
 
             return response()->json([
@@ -157,8 +156,7 @@ class DeliveryController extends Controller
     }
 
     public function cancelDelivery(Request $request){                       //0. cho xac nhan
-        $delivery = DB::table('Delivery')                                   //1. cho lay hang
-                ->where('deliveryId',$request->input('deliveryId'))         //2. dang giao
+        $delivery = Delivery::where('deliveryId',$request->input('deliveryId'))         //2. dang giao
                 ->first();                                                  //3. da giao
         if($delivery->status < 2){                                          //4. da huy
             $delivery->status = 4;
