@@ -183,4 +183,29 @@ class DeliveryController extends Controller
         }        
         
     }
+
+    public function takeDelivery(Request $request){
+        $shipperId = $request->input('shipperId');
+        $deliveryId = $request->input('deliveryId');
+
+        $delivery = DB::table('Delivery')
+                ->where('deliveryId',$deliveryId)
+                ->first();
+        if($delivery->status == 0 && $delivery->shipperId ==NULL)
+        {$delivery->status +=1;
+            $delivery->shipperId = $shipperId;
+            $delivery->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully',
+            ]);
+        }else{
+            $delivery->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully',
+            ]);
+        }
+        
+    }
 }
