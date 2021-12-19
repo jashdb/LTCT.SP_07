@@ -16,7 +16,6 @@ export default function UserName(props) {
         }
 
         const res = await axios.post('/api/getUserInfo', data);
-        console.log(res);
         if (res.data.status === 200) {
             setName(res.data.user.fullname)
         } else {

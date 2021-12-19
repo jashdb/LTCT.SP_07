@@ -71,7 +71,7 @@ class DeliveryController extends Controller
         $delivery->save();
         return response()->json([
             'status' => 200,
-            'message' => 'Successfully',
+            'message' => 'Updated successfully',
         ]);
     }
 
@@ -135,6 +135,25 @@ class DeliveryController extends Controller
         }
     }
 
+    public function getDeliveryInfo(Request $request){
+        $delivery = DB::table('Delivery')
+                ->where('deliveryId',$request->input('deliveryId'))
+                ->first();
+        if($delivery != NULL)
+        {
+            return response()->json([
+                'status' => 200,
+                'delivery' => $delivery,
+                'message' => 'Successfully',
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'Ewww 404 not found :^)',
+            ]);
+        }
+    }
+
     public function deleteDelivery(Request $request){
         $delivery = DB::table('Delivery')
                 ->where('deliveryId',$request->input('deliveryId'))
@@ -155,10 +174,10 @@ class DeliveryController extends Controller
         }   
     }
 
-    public function cancelDelivery(Request $request){                       //0. cho xac nhan
-        $delivery = Delivery::where('deliveryId',$request->input('deliveryId'))         //2. dang giao
-                ->first();                                                  //3. da giao
-        if($delivery->status < 2){                                          //4. da huy
+    public function cancelDelivery(Request $request){                           //0. cho xac nhan
+        $delivery = Delivery::where('deliveryId',$request->input('deliveryId')) //2. dang giao
+                ->first();                                                      //3. da giao
+        if($delivery->status < 2){                                              //4. da huy
             $delivery->status = 4;
             $delivery->save();
 
