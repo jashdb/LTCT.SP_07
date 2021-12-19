@@ -195,9 +195,31 @@ class DeliveryController extends Controller
                 'message' => 'Successfully',
             ]);
         }else{
-            $delivery->save();
+            return response()->json([
+                'status' => 404,
+                'message' => 'error',
+            ]);
+        }
+        
+    }
+
+    public function checkShipper(Request $request){
+        $shipperId = $request->input('shipperId');
+
+        $shipper = DB::table('User')
+                ->where('userId',$shipperId)
+                ->first();
+        if($shipper->role == 1)
+        {
             return response()->json([
                 'status' => 200,
+                'check' => true,
+                'message' => 'Successfully',
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'check' => false,
                 'message' => 'Successfully',
             ]);
         }
