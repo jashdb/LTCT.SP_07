@@ -77,7 +77,7 @@ function Dashboard(props) {
               />
             );
           })}
-          <Route path="/admin/delivery" component={Delivery}/> {/*/:deliveryId*/}
+          <Route path="/admin/delivery/:deliveryId" component={Delivery}/> {/*/:deliveryId*/}
         </Switch>
       </div>
       <FixedPlugin

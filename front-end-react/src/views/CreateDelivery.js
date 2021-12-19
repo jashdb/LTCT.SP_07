@@ -22,8 +22,6 @@ export default function CreateDelivery() {
         shippingFee: 0,
     });
 
-    const [productList, setProductList] = useState([]);
-
     // Select district
     // const handleDistrict = (e) => {
     //     handleChange(e);
@@ -37,23 +35,24 @@ export default function CreateDelivery() {
 		setState({...state, [e.target.name]: e.target.value });
 	}
 
-    const addProduct = (e) => {
-        setProductList(productList.concat(
-            <div>
-                <table width="100%">
-                    <td>
-                        <Input type="text" name="productName" placeholder="Enter productName"/>
-                    </td>
-                    <td>
-                        <Input type="text" name="productId" placeholder="Enter productId"/>
-                    </td>
-                    <td>
-                        <Input type="text" name="count" placeholder="Enter count"/>
-                    </td>
-                </table>
-            </div>
-        ))
-    }
+    // const [productList, setProductList] = useState([]);
+    // const addProduct = (e) => {
+    //     setProductList(productList.concat(
+    //         <div>
+    //             <table width="100%">
+    //                 <td>
+    //                     <Input type="text" name="productName" placeholder="Enter productName"/>
+    //                 </td>
+    //                 <td>
+    //                     <Input type="text" name="productId" placeholder="Enter productId"/>
+    //                 </td>
+    //                 <td>
+    //                     <Input type="text" name="count" placeholder="Enter count"/>
+    //                 </td>
+    //             </table>
+    //         </div>
+    //     ))
+    // }
 
     const submit = async () => {
         const data = state;
@@ -115,13 +114,13 @@ export default function CreateDelivery() {
                     />
                     <br/>
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                     {productList}
                     <Button color="primary" onClick={addProduct}>
                         Add Product
                     </Button>
                 </FormGroup>
-                {/* <FormGroup>
+                <FormGroup>
                     <Label for="district">District</Label>
                     <Input type="select" name="district" id="district" onChange={handleDistrict}>
                         <option value="option1">Option 1</option>
