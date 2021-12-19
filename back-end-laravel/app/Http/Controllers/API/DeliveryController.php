@@ -95,16 +95,16 @@ class DeliveryController extends Controller
         }
     }
 
-    public function getDeliveryByUser(Request $request){
-        //lay ra delivery của user 
-        $delivery = DB::table('Delivery')
+    public function getDeliveryByCustomer(Request $request){
+        //lay ra deliveries của user 
+        $deliveries = DB::table('Delivery')
                 ->where('customerId',$request->input('customerId'))
-                ->all();
-        if($delivery != NULL)
+                ->get();
+        if($deliveries != NULL)
         {
             return response()->json([
                 'status' => 200,
-                'delivery' => $delivery,
+                'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
         }else{
@@ -116,15 +116,15 @@ class DeliveryController extends Controller
     }
 
     public function getDeliveryByShipper(Request $request){
-        //lay ra delivery của shipper 
-        $delivery = DB::table('Delivery')
+        //lay ra deliveries của shipper 
+        $deliveries = DB::table('Delivery')
                 ->where('shipperId',$request->input('shipperId'))
-                ->all();
-        if($delivery != NULL)
+                ->get();
+        if($deliveries != NULL)
         {
             return response()->json([
                 'status' => 200,
-                'delivery' => $delivery,
+                'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
         }else{

@@ -20,7 +20,7 @@ export default function UserName(props) {
         if (res.data.status === 200) {
             setName(res.data.user.fullname)
         } else {
-            setName("Not found")
+            setName("- - -")
         }
     }
 

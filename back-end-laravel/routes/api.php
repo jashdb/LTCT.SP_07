@@ -27,7 +27,7 @@ Route::post('/getUserInfo', [UserController::class, 'getUserInfo']);
 Route::post('/createDelivery', [DeliveryController::class, 'createDelivery']);
 Route::post('/addProduct', [DeliveryController::class, 'addProduct']);
 Route::post('/getAvailableDelivery', [DeliveryController::class, 'getAvailableDelivery']);
-Route::post('/getDeliveryByUser', [DeliveryController::class, 'getDeliveryByUser']);
+Route::post('/getDeliveryByCustomer', [DeliveryController::class, 'getDeliveryByCustomer']);
 Route::post('/getDeliveryByShipper', [DeliveryController::class, 'getDeliveryByShipper']);
 Route::post('/deleteDelivery', [DeliveryController::class, 'deleteDelivery']);
 Route::post('/cancelDelivery', [DeliveryController::class, 'cancelDelivery']);
