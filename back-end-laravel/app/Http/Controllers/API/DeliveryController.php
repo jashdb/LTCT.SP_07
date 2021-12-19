@@ -159,8 +159,7 @@ class DeliveryController extends Controller
                 ->where('deliveryId',$request->input('deliveryId'))
                 ->first();
         if($delivery->status >= 3) {
-            DB::table('Delivery')
-                ->where('deliveryId',$request->input('deliveryId'))
+            Delivery::where('deliveryId',$request->input('deliveryId'))
                 ->delete();
 
             return response()->json([
