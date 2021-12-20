@@ -14,6 +14,9 @@ var routes = [
     icon: "nc-icon nc-delivery-fast",
     component: Dashboard,
     layout: "/admin",
+    logout: false,
+    customer: true,
+    shipper: true,
   },
   {
     path: "/available-delivery",
@@ -21,6 +24,9 @@ var routes = [
     icon: "nc-icon nc-tag-content",
     component: AvailableDelivery,
     layout: "/admin",
+    logout: false,
+    customer: false,
+    shipper: true,
   },
   {
     path: "/create-delivery",
@@ -28,6 +34,9 @@ var routes = [
     icon: "nc-icon nc-cloud-upload-94",
     component: CreateDelivery,
     layout: "/admin",
+    logout: true,
+    customer: true,
+    shipper: true,
   },
   {
     path: "/profile",
@@ -35,6 +44,9 @@ var routes = [
     icon: "nc-icon nc-single-02",
     component: UserPage,
     layout: "/admin",
+    logout: false,
+    customer: true,
+    shipper: true,
   },
   {
     path: "/login",
@@ -42,6 +54,9 @@ var routes = [
     icon: "nc-icon nc-circle-10",
     component: LoginPage,
     layout: "/admin",
+    logout: true,
+    customer: false,
+    shipper: false,
   },
   {
     path: "/icons",
@@ -49,6 +64,9 @@ var routes = [
     icon: "nc-icon nc-diamond",
     component: Icons,
     layout: "/admin",
+    logout: false,
+    customer: false,
+    shipper: false,
   },
   {
     path: "/typography",
@@ -56,6 +74,9 @@ var routes = [
     icon: "nc-icon nc-caps-small",
     component: Typography,
     layout: "/admin",
+    logout: false,
+    customer: false,
+    shipper: false,
   },
   {
     path: "/notifications",
@@ -63,6 +84,9 @@ var routes = [
     icon: "nc-icon nc-bell-55",
     component: Notifications,
     layout: "/admin",
+    logout: false,
+    customer: false,
+    shipper: false,
   },
 ];
 export default routes;

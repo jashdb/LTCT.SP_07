@@ -21,12 +21,17 @@ import { NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
+import { useSelector } from "react-redux";
 
 import logo from "logo.svg";
 
 var ps;
 
 function Sidebar(props) {
+  console.log("Sidebar render");
+  var sidebarState = (useSelector((state) => state.reducerUpdateSidebar)).sidebarState;
+  if (sidebarState === undefined) sidebarState = "logout";
+  console.log(sidebarState);
   const sidebar = React.useRef();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -70,6 +75,7 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
+            if ((sidebarState === "customer" && prop.customer) || (sidebarState === "shipper" && prop.shipper) || (sidebarState === "logout" && prop.logout))
             return (
               <li
                 className={
@@ -87,6 +93,7 @@ function Sidebar(props) {
                 </NavLink>
               </li>
             );
+            else return null;
           })}
         </Nav>
       </div>

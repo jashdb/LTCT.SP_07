@@ -16,6 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import LogoutButton from "components/Buttons/LogoutButton";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -33,8 +34,8 @@ function User() {
   console.log(userInfo);
   if (userInfo === undefined) userInfo = {
     avatar: "https://www.hoteljob.vn/cong-dong/frontend/images/default_avatar.png",
-    fullname: "Example name",
-    email: "abc@gmail.com",
+    fullname: "Not found",
+    email: "not found",
     role: 2,
   }
   return (
@@ -60,11 +61,11 @@ function User() {
                     <h5 className="title">{userInfo.fullname}</h5>
                   </a>
                   <p className="description">{userInfo.email}</p>
-                  <p className="description">{userInfo.role === 1 ? "Shipper" : (userInfo.role === 0 ? "Customer" : "Other role")}</p>
+                  <p className="description">{userInfo.role === 1 ? "Shipper" : (userInfo.role === 0 ? "Customer" : "Undefined")}</p>
                 </div>
               </CardBody>
-              <CardFooter>
-                <hr />
+              <CardFooter className="text-right">
+                <LogoutButton />
               </CardFooter>
             </Card>
           </Col>

@@ -1,9 +1,5 @@
 function actionLogout() {
-    const userInfo = {
-        email: "Undefined",
-        profilePic: "",
-        role: 0,
-    };
+    const userInfo = undefined;
     const data = {
         status: "LOGOUT",
         userInfo: userInfo,

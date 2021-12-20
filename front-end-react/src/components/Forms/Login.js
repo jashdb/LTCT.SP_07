@@ -4,7 +4,8 @@ import { useState } from "react";
 import swal from 'sweetalert';
 import {useHistory} from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import actionLogin from "redux/actions/actionLogin"
+import actionLogin from "redux/actions/actionLogin";
+import actionUpdateSidebar from "redux/actions/actionUpdateSidebar";
 import { FormGroup, Input, Label } from "reactstrap";
 
 function LoginForm() {
@@ -60,6 +61,8 @@ function LoginForm() {
         if (res.data.status === 200) {
             try {
                 dispatch(actionLogin(res.data.user));
+                if (res.data.user.role === 0) dispatch(actionUpdateSidebar("customer"));
+                else if (res.data.user.role === 1) dispatch(actionUpdateSidebar("shipper"));
                 swal(res.data.message, "Welcome to Delivery Module, " + res.data.user.fullname + "!", "success").then(() => history.push("/my-deliveries"));
             }
             catch(err) {
@@ -84,6 +87,8 @@ function LoginForm() {
         if (res.data.status === 200) {
             try {
                 dispatch(actionLogin(res.data.user));
+                if (res.data.user.role === 0) dispatch(actionUpdateSidebar("customer"));
+                else if (res.data.user.role === 1) dispatch(actionUpdateSidebar("shipper"));
                 swal(res.data.message, "Welcome back, " + res.data.user.fullname + "!", "success").then(() => history.push("/my-deliveries"));
             }
             catch(err) {
