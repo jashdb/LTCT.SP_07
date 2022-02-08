@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Delivery;
-use App\Models\DeliveryProduct;
+use App\Http\Controllers\API\CalculatorContext;
+use App\Http\Controllers\API\Calculators\DefaultCalculator;
+use Illuminate\Support\Facades\Http;
 
 class DeliveryController extends Controller
 {
-    public function createDelivery(Request $request){
+    public function createDelivery(Request $request)
+    {
         //'customerId', 'shipperId', 'deliveryAddress', 'shippingFee', 'status', 'cost', 'orderId'
         $newDelivery = new Delivery();
         $newDelivery->customerId = $request->input('customerId');
@@ -20,167 +23,157 @@ class DeliveryController extends Controller
         $newDelivery->cost = $request->input('cost');
         $newDelivery->orderId = $request->input('orderId');
 
-        $customer  = DB::table('User')
-                    ->where('userId',$request->input('customerId'))
-                    ->first();
+        $newDelivery->save();
+        return response()->json([
+            'status' => 200,
+            'delivery' => $newDelivery,
+            'message' => 'Create Successfully',
+        ]);
+    }
 
-        if ($customer == null)
+    public function updateStatus(Request $request)
+    {
+
+        $delivery = Delivery::where('deliveryId', $request->input('deliveryId'))
+            ->first();
+
+        if ($delivery == NULL) {
             return response()->json([
-                'status' => 201,
-                'message' => 'customerId doesn\'t exist!',
+                'status' => 404,
+                'message' => 'Delivery not found!',
             ]);
-        elseif ($customer->role != 0){
+        } else if ($delivery->status > 2) {
             return response()->json([
-                'status' => 201,
-                'message' => 'Wrong CustomerId!',
+                'status' => 405,
+                'message' => 'Cannot update status!',
             ]);
-        }else{
-            $newDelivery->save();
+        } else {
+            $delivery->status += 1;
+            $delivery->save();
             return response()->json([
                 'status' => 200,
-                'delivery' => $newDelivery,
-                'message' => 'Create Successfully',
+                'message' => 'Updated successfully',
             ]);
         }
-
     }
 
-    public function addProduct(Request $request){
-        //'deliveryId', 'productId', 'count', 'productName', 'category', 'company', 'productionDate'
-        $newProduct = new DeliveryProduct();
-        $newProduct->deliveryId = $request->input('deliveryId');
-        $newProduct->productId = $request->input('productId');
-        $newProduct->count = $request->input('count');
-        $newProduct->productName = $request->input('productName');
-        $newProduct->category = 0;
-        $newProduct->company = 0;
-        
-        $newProduct->save();
-        return response()->json([
-            'status' => 200,
-            'product' => $newProduct,
-            'message' => 'Add Successfully',
-        ]);
-    }
-
-    public function updateStatus(Request $request){
-        
-        $delivery = Delivery::where('deliveryId',$request->input('deliveryId'))
-                ->first();
-        $delivery->status +=1;
-        $delivery->save();
-        return response()->json([
-            'status' => 200,
-            'message' => 'Updated successfully',
-        ]);
-    }
-
-    public function getAvailableDelivery(Request $request){
+    public function getAvailableDelivery(Request $request)
+    {
         //lay ra delivery chua shipper nao nhan
         $deliveries = DB::table('Delivery')
-                ->where('status',0)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        
-        if($deliveries != NULL){
+            ->where('status', 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        if (!($deliveries->isEmpty())) {
             return response()->json([
                 'status' => 200,
                 'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
-                'message' => 'Opps! No delivery available. Ế vl',
+                'message' => 'No available delivery found',
             ]);
         }
     }
 
-    public function getDeliveryByCustomer(Request $request){
+    public function getDeliveryByCustomer(Request $request)
+    {
         //lay ra deliveries của user 
         $deliveries = DB::table('Delivery')
-                ->where('customerId',$request->input('customerId'))
-                ->orderBy('created_at', 'desc')
-                ->get();
-        if($deliveries != NULL)
-        {
+            ->where('customerId', $request->input('customerId'))
+            ->orderBy('created_at', 'desc')
+            ->get();
+        if (!($deliveries->isEmpty())) {
             return response()->json([
                 'status' => 200,
                 'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
-                'message' => '...Đỗ nghèo khỉ',
+                'message' => 'No delivery found!',
             ]);
         }
     }
 
-    public function getDeliveryByShipper(Request $request){
+    public function getDeliveryByShipper(Request $request)
+    {
         //lay ra deliveries của shipper 
         $deliveries = DB::table('Delivery')
-                ->where('shipperId',$request->input('shipperId'))
-                ->orderBy('created_at', 'desc')
-                ->get();
-        if($deliveries != NULL)
-        {
+            ->where('shipperId', $request->input('shipperId'))
+            ->orderBy('created_at', 'desc')
+            ->get();
+        if (!($deliveries->isEmpty())) {
             return response()->json([
                 'status' => 200,
                 'deliveries' => $deliveries,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
-                'message' => '...Đồ lười!',
+                'message' => 'No delivery found!',
             ]);
         }
     }
 
-    public function getDeliveryInfo(Request $request){
+    public function getDeliveryInfo(Request $request)
+    {
         $delivery = DB::table('Delivery')
-                ->where('deliveryId',$request->input('deliveryId'))
-                ->first();
-        if($delivery != NULL)
-        {
+            ->where('deliveryId', $request->input('deliveryId'))
+            ->first();
+        if ($delivery != NULL) {
             return response()->json([
                 'status' => 200,
                 'delivery' => $delivery,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
-                'message' => 'Ewww 404 not found :^)',
+                'message' => 'Delivery not found',
             ]);
         }
     }
 
-    public function deleteDelivery(Request $request){
+    public function deleteDelivery(Request $request)
+    {
         $delivery = DB::table('Delivery')
-                ->where('deliveryId',$request->input('deliveryId'))
-                ->first();
-        if($delivery->status >= 3) {
-            Delivery::where('deliveryId',$request->input('deliveryId'))
+            ->where('deliveryId', $request->input('deliveryId'))
+            ->first();
+        if ($delivery->status >= 3) {
+            Delivery::where('deliveryId', $request->input('deliveryId'))
                 ->delete();
 
             return response()->json([
                 'status' => 200,
                 'message' => 'Successfully',
             ]);
-        }else{   
+        } else {
             return response()->json([
                 'status' => 200,
                 'message' => 'Can not delete',
             ]);
-        }   
+        }
     }
 
-    public function cancelDelivery(Request $request){                           //0. cho xac nhan
-        $delivery = Delivery::where('deliveryId',$request->input('deliveryId')) //2. dang giao
-                ->first();                                                      //3. da giao
-        if($delivery->status < 2){                                              //4. da huy
+    public function cancelDelivery(Request $request)
+    {
+        $delivery = Delivery::where('deliveryId', $request->input('deliveryId'))
+            ->first();
+
+        if ($delivery == NULL) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Delivery not found!',
+            ]);
+        }
+
+        if ($delivery->status < 2) {
             $delivery->status = 4;
             $delivery->save();
 
@@ -188,59 +181,70 @@ class DeliveryController extends Controller
                 'status' => 200,
                 'message' => 'Successfully',
             ]);
-
-        }else{
+        } else {
             return response()->json([
-                'status' => 404,
-                'message' => 'can not cancel!',
+                'status' => 405,
+                'message' => 'Can not cancel!',
             ]);
-        }        
-        
+        }
     }
 
-    public function takeDelivery(Request $request){
+    public function takeDelivery(Request $request)
+    {
         $shipperId = $request->input('shipperId');
         $deliveryId = $request->input('deliveryId');
 
-        $delivery = Delivery::where('deliveryId',$deliveryId)
+        $delivery = Delivery::where('deliveryId', $deliveryId)
             ->first();
-        if($delivery->status == 0 && $delivery->shipperId == NULL) {
-            $delivery->status +=1;
+
+        if ($delivery == NULL) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Delivery not found',
+            ]);
+        } else if ($delivery->status == 0 && $delivery->shipperId == NULL) {
+            $delivery->status += 1;
             $delivery->shipperId = $shipperId;
             $delivery->save();
             return response()->json([
                 'status' => 200,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
-                'status' => 404,
-                'message' => 'error',
+                'status' => 400,
+                'message' => 'Error, this delivery is already be taken or canceled!',
             ]);
         }
-        
     }
 
-    public function checkShipper(Request $request){
+    public function checkShipper(Request $request)
+    {
         $shipperId = $request->input('shipperId');
 
         $shipper = DB::table('User')
-                ->where('userId',$shipperId)
-                ->first();
-        if($shipper->role == 1)
-        {
+            ->where('userId', $shipperId)
+            ->first();
+        if ($shipper->role == 1) {
             return response()->json([
                 'status' => 200,
                 'check' => true,
                 'message' => 'Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
                 'check' => false,
                 'message' => 'Successfully',
             ]);
         }
-        
+    }
+
+    public function getShippingFee(Request $request)
+    {
+        $calculatorContext = new CalculatorContext();
+
+        $calculatorContext->setCalculator(new DefaultCalculator);
+        return $calculatorContext->calculateShippingFee($request);
     }
 }
