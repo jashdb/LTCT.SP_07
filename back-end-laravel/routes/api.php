@@ -35,3 +35,5 @@ Route::post('/cancelDelivery', [DeliveryController::class, 'cancelDelivery']);
 Route::post('/takeDelivery', [DeliveryController::class, 'takeDelivery']);
 Route::post('/updateStatus', [DeliveryController::class, 'updateStatus']);
 Route::post('/checkShipper', [DeliveryController::class, 'checkShipper']);
+
+Route::get('/getShippingFee', [DeliveryController::class, 'getShippingFee']);
